@@ -7,7 +7,7 @@ async function getBBSAllData() {
     ? `https://${process.env.VERCEL_URL}` // Vercelにデプロイされた場合
     : 'http://localhost:3000';           // ローカル開発環境の場合
 
-  const response = await fetch(`${apiBaseUrl}/api/post`, {
+  const response = await fetch("/api/post", {
     cache: "no-store",
   });
   {/*
@@ -17,6 +17,8 @@ async function getBBSAllData() {
     cache: "no-store"は、このリクエストの結果をブラウザやその他のキャッシュに保存しないように指示しています。これにより、常にサーバーから最新のデータが取得されることが保証されます。
   */}
   //console.log("response:", response);
+  //エラーが出ているのでここで終わっている。
+  // (後ろのconsole.logは実行されない)
 
   const bbsAllData: BBSData[] = await response.json();
   {/*
