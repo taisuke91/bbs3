@@ -16,7 +16,7 @@ async function getBBSAllData() {
     レスポンスが返ってくると、そのResponseオブジェクトがresponse定数に代入されます。
     cache: "no-store"は、このリクエストの結果をブラウザやその他のキャッシュに保存しないように指示しています。これにより、常にサーバーから最新のデータが取得されることが保証されます。
   */}
-  console.log("response:", response);
+  //console.log("response:", response);
 
   const bbsAllData: BBSData[] = await response.json();
   {/*
