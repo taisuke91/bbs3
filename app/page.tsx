@@ -6,7 +6,8 @@ async function getBBSAllData() {
   const apiBaseUrl = process.env.VERCEL_URL
     ? `https://${process.env.VERCEL_URL}` // Vercelにデプロイされた場合
     : 'http://localhost:3000';           // ローカル開発環境の場合
-
+  
+  console.log("apiBaseUrl:", apiBaseUrl);
   const response = await fetch(`${apiBaseUrl}/api/post`, {
     cache: "no-store",
   });
