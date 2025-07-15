@@ -10,7 +10,16 @@ async function getBBSAllData() {
   const response = await fetch(`${apiBaseUrl}/api/post`, {
     cache: "no-store",
   });
-  console.log(response);
+  // レスポンスのステータスをチェック！
+  if (!response.ok) {
+    // response.ok は 401, 404, 500 などのステータスでは false になります
+    console.error('API Error:', response.status, response.statusText);
+    if (response.status === 401) {
+      // ログインページにリダイレクトするか、エラーメッセージを表示
+      window.location.href = '/login';
+    }
+    // JSONとしてパースするのを防ぐために、ここで処理を中断
+  }
   {/*
     ここでは、fetch関数を使って指定されたURL (http://localhost:3000/api/post) に対してHTTPリクエストを送信しています。
     awaitキーワードは、fetchリクエストが完了してレスポンスが返ってくるまで、この関数の実行を一時停止します。

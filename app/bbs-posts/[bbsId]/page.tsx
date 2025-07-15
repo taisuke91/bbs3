@@ -8,8 +8,6 @@ async function getDetailBBSData(id: number) {
     ? `https://${process.env.VERCEL_URL}` // Vercelにデプロイされた場合
     : 'http://localhost:3000';           // ローカル開発環境の場合
   
-  console.log('DEBUG (修正後): 解決されたAPIベースURL:', apiBaseUrl);
-
   const response = await fetch(`${apiBaseUrl}/api/post/${id}`, {
     cache: "no-store",
   });
