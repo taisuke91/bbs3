@@ -1,16 +1,15 @@
 import BBSCardList from "./components/BBSCardList"; //BBSCardListコンポーネントのインポート
 import { BBSData } from "./types/type";  //BBSData型のインポート(型定義ファイルから)
 const API_BASE_URL: string = process.env.NEXT_PUBLIC_API_BASE_URL || ''; //環境変数からAPIのベースURLを取得
-const API_BASE_URL_VAR: string = process.env.NEXT_PUBLIC_API_BASE_URL || '';
-const BASE_PATH_FOR_ASSETS_VAR: string = process.env.NEXT_PUBLIC_BASE_PATH || '';
+
 async function getBBSAllData() {
-  console.log('DEBUG: NEXT_PUBLIC_API_BASE_URL is:', process.env.NEXT_PUBLIC_API_BASE_URL);
-  console.log('DEBUG: NEXT_PUBLIC_BASE_PATH is:', process.env.NEXT_PUBLIC_BASE_PATH);
+  const apiBaseUrl = process.env.VERCEL_URL
+    ? `https://${process.env.VERCEL_URL}` // Vercelにデプロイされた場合
+    : 'http://localhost:3000';           // ローカル開発環境の場合
+  
+  console.log('DEBUG (修正後): 解決されたAPIベースURL:', apiBaseUrl);
 
-  const fullUrl = `${API_BASE_URL_VAR}${BASE_PATH_FOR_ASSETS_VAR}/api/post`;
-  console.log('DEBUG: Attempting to fetch from:', fullUrl);
-
-  const response = await fetch(fullUrl, {
+  const response = await fetch(`${apiBaseUrl}/api/post`, {
     cache: "no-store",
   });
   {/*

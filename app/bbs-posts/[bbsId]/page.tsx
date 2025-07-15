@@ -4,7 +4,13 @@ import React from 'react'
 const API_BASE_URL: string = process.env.NEXT_PUBLIC_API_BASE_URL || '';
 
 async function getDetailBBSData(id: number) {
-  const response = await fetch(`${API_BASE_URL}/api/post/${id}`, {
+  const apiBaseUrl = process.env.VERCEL_URL
+    ? `https://${process.env.VERCEL_URL}` // Vercelにデプロイされた場合
+    : 'http://localhost:3000';           // ローカル開発環境の場合
+  
+  console.log('DEBUG (修正後): 解決されたAPIベースURL:', apiBaseUrl);
+
+  const response = await fetch(`${apiBaseUrl}/api/post/${id}`, {
     cache: "no-store",
   });
   // fetch関数を使って指定されたURLに対してHTTPリクエストを送信しています。
