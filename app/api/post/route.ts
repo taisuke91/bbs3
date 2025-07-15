@@ -5,7 +5,9 @@ export async function GET(req: Request) {
   const allBBSPosts = await prisma.post.findMany();
   //Prismaクライアントを使って、データベースのpostモデル（テーブルに対応）
   //からすべてのレコード（投稿）を取得しています。
-  return NextResponse.json(allBBSPosts);
+
+  return allBBSPosts
+  //return NextResponse.json(allBBSPosts);
   //extResponseのjsonメソッドを使用し、allBBSPostsに格納
   //されているデータをJSON形式に変換してレスポンスボディとして設定します。
   //これにより、クライアント側はhttp://localhost:3000/api/postの
