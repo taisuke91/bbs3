@@ -20,7 +20,13 @@ async function getBBSAllData() {
   //console.log("response:", response);
   //エラーが出ているのでここで終わっている。
   // (後ろのconsole.logは実行されない)
-
+  if (!response.ok) {
+    throw new Error("Failed to fetch BBS data");
+  }
+  {/*
+    response.okは、HTTPレスポンスのステータスコードが200〜299の範囲にあるかどうかを確認します。
+    もしそうでなければ、エラーを投げて処理を中断します。
+  */}
   const bbsAllData: BBSData[] = await response.json();
   {/*
     前の行で取得したresponseオブジェクトは、生のHTTPレスポンスを含んでいます。
