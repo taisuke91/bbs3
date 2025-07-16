@@ -21,7 +21,7 @@ async function getBBSAllData() {
   //エラーが出ているのでここで終わっている。
   // (後ろのconsole.logは実行されない)
   if (!response.ok) {
-    throw new Error("Failed to fetch BBS data");
+    console.log("Failed to fetch BBS data");
   }
   {/*
     response.okは、HTTPレスポンスのステータスコードが200〜299の範囲にあるかどうかを確認します。
