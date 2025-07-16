@@ -2,7 +2,6 @@ import { NextResponse } from "next/server";
 import prisma from "../../../../lib/prismaClient";
 
 export async function GET(
-    _req: Request,
     { params }: { params: Promise<{ bbsId: string }> }
     //bbsIdというプロパティを持つparamsオブジェクトをparamsという名前で受け取ります。
 ) {

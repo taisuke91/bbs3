@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import prisma from "../../../lib/prismaClient";
 
-export async function GET(req: Request) {
+export async function GET() {
   const allBBSPosts = await prisma.post.findMany();
   //Prismaクライアントを使って、データベースのpostモデル（テーブルに対応）
   //からすべてのレコード（投稿）を取得しています。
