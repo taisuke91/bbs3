@@ -1,3 +1,4 @@
+"use client";
 import { BBSData } from '@/app/types/type';
 import Link from 'next/link';
 import React from 'react'
@@ -8,7 +9,7 @@ async function getDetailBBSData(id: number) {
     ? `https://${process.env.VERCEL_URL}` // Vercelにデプロイされた場合
     : 'http://localhost:3000';           // ローカル開発環境の場合
   
-  const response = await fetch(`${apiBaseUrl}/api/post/${id}`, {
+  const response = await fetch(`/api/post/${id}`, {
     cache: "no-store",
   });
   // fetch関数を使って指定されたURLに対してHTTPリクエストを送信しています。
