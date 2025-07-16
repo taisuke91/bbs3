@@ -1,6 +1,7 @@
 import BBSCardList from "./components/BBSCardList"; //BBSCardListコンポーネントのインポート
 import { BBSData } from "./types/type";  //BBSData型のインポート(型定義ファイルから)
 const API_BASE_URL: string = process.env.NEXT_PUBLIC_API_BASE_URL || ''; //環境変数からAPIのベースURLを取得
+import prisma from "../lib/prismaClient";
 
 async function getBBSAllData() {
   const apiBaseUrl = process.env.VERCEL_URL
@@ -8,9 +9,10 @@ async function getBBSAllData() {
     : 'http://localhost:3000';           // ローカル開発環境の場合
   
   console.log("apiBaseUrl:", apiBaseUrl);
-  const response = await fetch(`${apiBaseUrl}/api/post`, {
-    cache: "no-store",
-  });
+  const bbsAllData = await prisma.post.findMany();
+  //const response = await fetch(`${apiBaseUrl}/api/post`, {
+  //  cache: "no-store",
+  //});
   {/*
     ここでは、fetch関数を使って指定されたURL (http://localhost:3000/api/post) に対してHTTPリクエストを送信しています。
     awaitキーワードは、fetchリクエストが完了してレスポンスが返ってくるまで、この関数の実行を一時停止します。
@@ -20,14 +22,8 @@ async function getBBSAllData() {
   //console.log("response:", response);
   //エラーが出ているのでここで終わっている。
   // (後ろのconsole.logは実行されない)
-  if (!response.ok) {
-    console.log("Failed to fetch BBS data");
-  }
-  {/*
-    response.okは、HTTPレスポンスのステータスコードが200〜299の範囲にあるかどうかを確認します。
-    もしそうでなければ、エラーを投げて処理を中断します。
-  */}
-  const bbsAllData: BBSData[] = await response.json();
+  
+  //const bbsAllData: BBSData[] = await response.json();
   {/*
     前の行で取得したresponseオブジェクトは、生のHTTPレスポンスを含んでいます。
     response.json()メソッドは、そのレスポンスボディをJSON形式としてパース（解析）し、
