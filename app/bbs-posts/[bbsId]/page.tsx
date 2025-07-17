@@ -1,16 +1,14 @@
-"use client";
 import { BBSData } from '@/app/types/type';
-import prisma from "../../../lib/prismaClient";
 import Link from 'next/link';
 import React from 'react'
 import { DeleteButton } from '@/app/components/DeleteButton';
 
-async function getDetailBBSData(id: string) {
+async function getDetailBBSData(id: number) {
   const apiBaseUrl = process.env.VERCEL_URL
     ? `https://${process.env.VERCEL_URL}` // Vercelにデプロイされた場合
     : 'http://localhost:3000';           // ローカル開発環境の場合
   
-  const response = await fetch(`/api/post/${id}`, {
+  const response = await fetch(`${apiBaseUrl}/api/post/${id}`, {
     cache: "no-store",
   });
   // fetch関数を使って指定されたURLに対してHTTPリクエストを送信しています。
@@ -35,7 +33,7 @@ async function getDetailBBSData(id: string) {
 //さらにそのparamsオブジェクトはbbsIdというプロパティを持ち、
 // そのbbsIdプロパティの値はnumber型である」という意味になります。
 
-const BBSDetailPage = async ({ params }: { params: Promise<{ bbsId: string }> }) => {
+const BBSDetailPage = async ({ params }: { params: Promise<{ bbsId: number }> }) => {
   
   const bbsDetailData = await getDetailBBSData((await params).bbsId);
   if (bbsDetailData) {
@@ -51,7 +49,6 @@ const BBSDetailPage = async ({ params }: { params: Promise<{ bbsId: string }> })
           <p className="text-gray-900">{content}</p>
         </div>
         <Link href={"/"} className="bg-blue-500 text-white font-bold py-2 px-4 rounded-md">戻る</Link>
-        <DeleteButton bbsId={(await params).bbsId} /> {/* ボタンを配置し、投稿IDを渡す */}
       </div>
     );
   } else {
