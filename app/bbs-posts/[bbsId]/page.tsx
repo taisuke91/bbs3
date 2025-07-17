@@ -48,7 +48,10 @@ const BBSDetailPage = async ({ params }: { params: Promise<{ bbsId: number }> })
         <div className="mb-8">
           <p className="text-gray-900">{content}</p>
         </div>
-        <Link href={"/"} className="bg-blue-500 text-white font-bold py-2 px-4 rounded-md">戻る</Link>
+        <div className="flex items-center gap-4 mt-4">
+          <Link href={"/"} className="bg-blue-500 text-white font-bold py-2 px-4 rounded-md">戻る</Link>
+          <DeleteButton bbsId={(await params).bbsId.toString()} />
+        </div>
       </div>
     );
   } else {
