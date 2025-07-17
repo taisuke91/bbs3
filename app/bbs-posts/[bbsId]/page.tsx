@@ -1,3 +1,4 @@
+"use client";
 import { BBSData } from '@/app/types/type';
 import prisma from "../../../lib/prismaClient";
 import Link from 'next/link';
@@ -5,14 +6,28 @@ import React from 'react'
 import { DeleteButton } from '@/app/components/DeleteButton';
 
 async function getDetailBBSData(id: string) {
-  const bbsDetailData = await prisma.post.findUnique({
-    where: {
-      id: parseInt(id),
-    },
+  const apiBaseUrl = process.env.VERCEL_URL
+    ? `https://${process.env.VERCEL_URL}` // Vercelにデプロイされた場合
+    : 'http://localhost:3000';           // ローカル開発環境の場合
+  
+  const response = await fetch(`/api/post/${id}`, {
+    cache: "no-store",
   });
+  // fetch関数を使って指定されたURLに対してHTTPリクエストを送信しています。
+  // awaitキーワードは、fetchリクエストが完了してレスポンスが返ってくるまで、この関数の実行を一時停止します。
+  // レスポンスが返ってくると、そのResponseオブジェクトがresponse定数に代入されます。
+  // cache: "no-store"は、このリクエストの結果をブラウザやその他のキャッシュに保存しないように指示しています。
+  // これにより、常にサーバーから最新のデータが取得されることが保証されます。
+
+  const bbsDetailData: BBSData = await response.json();
+  // 前の行で取得したresponseオブジェクトは、生のHTTPレスポンスを含んでいます。
+  // response.json()メソッドは、そのレスポンスボディをJSON形式として
+  // パース（解析）し、JavaScriptのオブジェクトまたは配列に変換する非同期操作です。
+  // JSON(JavaScript Object Notation)とは、データを表現するための
+  // 軽量なテキストベースのフォーマットです。
+
   return bbsDetailData;
 }
-
 
 //{ params: { bbsId: number } }について、
 //paramsというプロパティを持つオブジェクトであり、
